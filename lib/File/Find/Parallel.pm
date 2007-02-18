@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv( '0.0.1' );
+use version; our $VERSION = qv( '0.0.2' );
 
 sub new {
     my $class = shift;
@@ -28,12 +28,17 @@ sub add_dirs {
     push @{ $self->{dirs} }, @_;
 }
 
-sub _iterator {
-    my $self      = shift;
-    my $threshold = shift;
+sub want_iterator {
+    my $self = shift;
+    my $threshold = shift || 1;
 
     my @dirs = $self->get_dirs;
     my @work = @dirs ? ( '.' ) : ();
+
+    # Return an empty iterator if asked for more instances of an object
+    # than we could every have.
+    return sub { return }
+      if $threshold > @dirs;
 
     return sub {
         return unless @work;
@@ -59,12 +64,12 @@ sub _iterator {
 
 sub all_iterator {
     my $self = shift;
-    return $self->_iterator( scalar $self->get_dirs );
+    return $self->want_iterator( scalar $self->get_dirs );
 }
 
 sub any_iterator {
     my $self = shift;
-    return $self->_iterator( 1 );
+    return $self->want_iterator( 1 );
 }
 
 1;
@@ -76,7 +81,7 @@ File::Find::Parallel - Traverse a number of similar directories in parallel
 
 =head1 VERSION
 
-This document describes File::Find::Parallel version 0.0.1
+This document describes File::Find::Parallel version 0.0.2
 
 =head1 SYNOPSIS
 
@@ -163,6 +168,9 @@ files and directories that are contained in all home directories.
 
     print "    $_\n" for @common;
 
+For a complete concrete example of its use see C<lncopies> in the C<bin>
+subdirectory of this distribution.
+
 =head1 INTERFACE
 
 =over
@@ -240,9 +248,25 @@ the iterator would return
 That is it returns the names of those files and directories that can be
 found in both F<foo> and F<bar>.
 
-=back
+=item C<< want_iterator( $threshold ) >>
 
-Create a new C<< File::Find::Parallel >>.
+Returns an iterator that returns all files and directories for which
+there are at least the specified number of instances across all
+directories being scanned. For example if you are scanning three
+directories and you need to perform some operation whenever a particular
+file is found in two or more of them:
+
+    my $ffp = File::Find::Parallel->new( $dir1, $dir2, $dir3 );
+    my $iter = $ffp->want_iterator( 2 );
+    
+    while ( my $obj = $iter->() ) {
+        print "We have at least two copies of $obj\n";
+    }
+
+This is the primitive on which C<all_iterator> and C<any_iterator>
+are built.
+
+=back
 
 =head1 DEPENDENCIES
 

@@ -1,3 +1,4 @@
+bin/lncopies
 Changes
 lib/File/Find/Parallel.pm
 Makefile.PL
