@@ -11,7 +11,7 @@ my %EXE = (
             'Getopt::Long' => '2.34',
             'Pod::Usage'   => '1.3',
         },
-        EXE_FILES => ['bin/lncopies'],
+        EXE_FILES => ['examples/lncopies'],
     }
 );
 

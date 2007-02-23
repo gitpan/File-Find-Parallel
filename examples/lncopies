@@ -132,9 +132,9 @@ lncopies [options] [dir1 dir2 ...]
 
  Options:
 
-    -help                   see this summary
-    -man                    view man page for lncopies
-    -v                      verbose mode
+    -help          see this summary
+    -man           view man page for lncopies
+    -v             verbose mode
 
 =head1 DESCRIPTION
 

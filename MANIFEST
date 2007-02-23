@@ -1,5 +1,5 @@
-bin/lncopies
 Changes
+examples/lncopies
 lib/File/Find/Parallel.pm
 Makefile.PL
 MANIFEST

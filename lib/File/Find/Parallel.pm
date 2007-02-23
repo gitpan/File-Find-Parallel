@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv( '0.0.3' );
+use version; our $VERSION = qv( '0.0.4' );
 
 sub new {
     my $class = shift;
@@ -81,7 +81,7 @@ File::Find::Parallel - Traverse a number of similar directories in parallel
 
 =head1 VERSION
 
-This document describes File::Find::Parallel version 0.0.3
+This document describes File::Find::Parallel version 0.0.4
 
 =head1 SYNOPSIS
 
