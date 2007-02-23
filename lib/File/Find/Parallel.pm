@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv( '0.0.2' );
+use version; our $VERSION = qv( '0.0.3' );
 
 sub new {
     my $class = shift;
@@ -36,7 +36,7 @@ sub want_iterator {
     my @work = @dirs ? ( '.' ) : ();
 
     # Return an empty iterator if asked for more instances of an object
-    # than we could every have.
+    # than we could ever have.
     return sub { return }
       if $threshold > @dirs;
 
@@ -81,7 +81,7 @@ File::Find::Parallel - Traverse a number of similar directories in parallel
 
 =head1 VERSION
 
-This document describes File::Find::Parallel version 0.0.2
+This document describes File::Find::Parallel version 0.0.3
 
 =head1 SYNOPSIS
 
@@ -143,10 +143,22 @@ Still not clear? Well, if you wanted to do a recursive diff on the two
 directories you'd iterate their union so you could report files that
 were present in F<foo> but missing from F<bar> and vice-versa.
 
-If, on the other hand you wanted to scan the directories and make any
-files shared in both into hard links you'd iterate their intersection:
-there's no potential for hard linking items that exist in only one
-directory.
+If, on the other hand you wanted to scan the directories and find all
+the files that are common to all of them you'd iterate their
+intersection and receive only files and directories that were present in
+all the directories being scanned.
+
+The C<any_iterator> and C<all_iterator> are built on a more general
+purpose method: C<want_iterator>. If, for example, you want to make
+links between files that are found in more than one directory you might
+get your iterator like this:
+
+    my $iter = $ffp->want_iterator( 2 );
+
+The apparently magic '2' reflects the fact that if you're going to be
+making links you need at least two files. No matter how many directories
+you are iterating over in parallel you will only see files and
+directories that appear in at least two of those directories.
 
 File::Find::Parallel can scan any number of directories at the same
 time. Here's an example (on Unix systems) that returns the list of all
@@ -168,8 +180,22 @@ files and directories that are contained in all home directories.
 
     print "    $_\n" for @common;
 
-For a complete concrete example of its use see C<lncopies> in the C<bin>
+For a complete concrete example of its use see L<lncopies> in the C<bin>
 subdirectory of this distribution.
+
+=head2 Iterators
+
+The iterator returned by C<any_iterator>, C<all_iterator> or
+C<want_iterator> is a code reference. Call it to get the next file or
+directory. When all files and directories have been returned the
+iterator will return C<undef>.
+
+Once created an iterator is independent of the File::Find::Parallel
+object that created it. If the object goes out of scope and is destroyed
+during the life of the iterator it will still function normally.
+
+You may have many active iterators for a single File::Find::Parallel
+object at any time.
 
 =head1 INTERFACE
 
@@ -204,8 +230,9 @@ Add to the list of directories to be scanned.
 Get an iterator that will return the names of all the files and
 directories that are in the union of the directories to be scanned.
 
-The returned iterator is a code reference that returns a new name each
-time it is called. It returns undef when all names have been returned.
+The returned iterator is a code reference that returns a new name
+each time it is called. It returns C<undef> when all names have
+been returned.
 
 The returned names are relative to the base directories. Given
 directories like this
@@ -224,7 +251,8 @@ the iterator would return
     d/e
 
 That is it returns the list of names that would result if F<foo> was
-copied over F<bar> and then F<bar> scanned.
+copied over F<bar> and then F<bar> scanned. Note that the starting
+directory '.' is returned.
 
 Directories are searched in breadth first order.
 
@@ -258,7 +286,7 @@ file is found in two or more of them:
 
     my $ffp = File::Find::Parallel->new( $dir1, $dir2, $dir3 );
     my $iter = $ffp->want_iterator( 2 );
-    
+
     while ( my $obj = $iter->() ) {
         print "We have at least two copies of $obj\n";
     }
@@ -270,7 +298,10 @@ are built.
 
 =head1 DEPENDENCIES
 
-The tests require L<File::Tempdir>.
+The tests require L<File::Tempdir> and optionally L<Test::Pod::Coverage>
+and L<Test::Pod>.
+
+The L<lncopies> script requires L<Getopt::Long> and L<Pod::Usage>.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -287,7 +318,8 @@ Andy Armstrong  C<< <andy@hexten.net> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007, Andy Armstrong C<< <andy@hexten.net> >>. All rights reserved.
+Copyright (c) 2007, Andy Armstrong C<< <andy@hexten.net> >>. All
+rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.

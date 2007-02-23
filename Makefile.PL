@@ -20,6 +20,7 @@ my %ARGS = (
     AUTHOR        => 'Andy Armstrong <andy@hexten.net>',
     VERSION_FROM  => 'lib/File/Find/Parallel.pm',
     ABSTRACT_FROM => 'lib/File/Find/Parallel.pm',
+    LICENSE       => 'perl',
     PL_FILES      => {},
     EXE_FILES     => [],
     PREREQ_PM     => {

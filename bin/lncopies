@@ -88,7 +88,7 @@ sub lncopies {
                     my $keep = pop @$stat;
 
                     # Loop over all the files that are not already hard
-                    # links to the file we're linking them too.
+                    # links to the file we're linking them to.
                     for my $link ( grep { $_->[1] != $stat->[1] } @links ) {
                         my $file = pop @$link;
                         my $tmp  = "$file.tmp";

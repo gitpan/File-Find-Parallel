@@ -1,9 +1,9 @@
 --- #YAML:1.0
 name:                File-Find-Parallel
-version:             v0.0.2
+version:             v0.0.3
 abstract:            Traverse a number of similar directories in parallel
-license:             ~
-generated_by:        ExtUtils::MakeMaker version 6.31
+license:             perl
+generated_by:        ExtUtils::MakeMaker version 6.32
 distribution_type:   module
 requires:     
     File::Tempdir:                 0.02
