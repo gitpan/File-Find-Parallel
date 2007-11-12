@@ -3,7 +3,6 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 eval 'use ExtUtils::MakeMaker::Coverage';
-warn "Optional ExtUtils::MakeMaker::Coverage not available\n" if $@;
 
 my %EXE = (
     'lncopies' => {
@@ -25,7 +24,6 @@ my %ARGS = (
     EXE_FILES     => [],
     PREREQ_PM     => {
         'Test::More'    => 0,
-        'version'       => 0,
         'File::Tempdir' => '0.02',
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },

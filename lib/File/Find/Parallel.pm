@@ -3,8 +3,9 @@ package File::Find::Parallel;
 use warnings;
 use strict;
 use Carp;
+use File::Spec;
 
-use version; our $VERSION = qv( '0.0.4' );
+our $VERSION = '0.50';
 
 sub new {
     my $class = shift;
@@ -81,7 +82,7 @@ File::Find::Parallel - Traverse a number of similar directories in parallel
 
 =head1 VERSION
 
-This document describes File::Find::Parallel version 0.0.4
+This document describes File::Find::Parallel version 0.5
 
 =head1 SYNOPSIS
 
