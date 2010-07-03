@@ -1,17 +1,24 @@
---- #YAML:1.0
-name:                File-Find-Parallel
-version:             0.51
-abstract:            Traverse a number of similar directories in parallel
-license:             perl
-generated_by:        ExtUtils::MakeMaker version 6.36_01
-distribution_type:   module
-requires:     
-    File::Tempdir:                 0.02
-    Getopt::Long:                  2.34
-    Pod::Usage:                    1.3
-    Test::More:                    0
-meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
-    version: 1.2
+---
+abstract: 'Traverse a number of similar directories in parallel'
 author:
-    - Andy Armstrong <andy@hexten.net>
+  - 'Andy Armstrong <andy@hexten.net>'
+configure_requires:
+  Module::Build: 0.36
+generated_by: 'Module::Build version 0.3607'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: File-Find-Parallel
+provides:
+  File::Find::Parallel:
+    file: lib/File/Find/Parallel.pm
+    version: 0.52
+requires:
+  File::Temp: 0.22
+  Test::More: 0
+resources:
+  bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=File-Find-Parallel
+  license: http://dev.perl.org/licenses/
+  repository: 'git://github.com/AndyA/File--Find--Parallel.git (fetch)'
+version: 0.52

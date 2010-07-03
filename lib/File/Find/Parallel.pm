@@ -5,7 +5,7 @@ use strict;
 use Carp;
 use File::Spec;
 
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 
 sub new {
     my $class = shift;
@@ -81,7 +81,7 @@ File::Find::Parallel - Traverse a number of similar directories in parallel
 
 =head1 VERSION
 
-This document describes File::Find::Parallel version 0.51
+This document describes File::Find::Parallel version 0.52
 
 =head1 SYNOPSIS
 
@@ -298,7 +298,7 @@ are built.
 
 =head1 DEPENDENCIES
 
-The tests require L<File::Tempdir> and optionally L<Test::Pod::Coverage>
+The tests require L<File::Temp> and optionally L<Test::Pod::Coverage>
 and L<Test::Pod>.
 
 The L<lncopies> script requires L<Getopt::Long> and L<Pod::Usage>.
@@ -318,7 +318,7 @@ Andy Armstrong  C<< <andy@hexten.net> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007, Andy Armstrong C<< <andy@hexten.net> >>. All
+Copyright (c) 2007-2008, Andy Armstrong C<< <andy@hexten.net> >>. All
 rights reserved.
 
 This module is free software; you can redistribute it and/or
